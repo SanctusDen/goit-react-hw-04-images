@@ -1,6 +1,6 @@
 import { Form, SearchHeader } from './Searchbar.styled';
 
-export const Searchbar = ({ onSubmit, SetSearchQuery, searchQuery }) => {
+export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     const {
@@ -9,7 +9,7 @@ export const Searchbar = ({ onSubmit, SetSearchQuery, searchQuery }) => {
     if (searchQuery.trim() === '') {
       return;
     }
-    onSubmit();
+    onSubmit(searchQuery);
   };
 
   // const handleSubmit = e => {

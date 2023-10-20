@@ -88,8 +88,8 @@ export const App = ({ onBackdropClick }) => {
   //   }
   // };
 
-  const onSubmit = () => {
-    setSearchQuery(searchQuery);
+  const onSubmit = query => {
+    setSearchQuery(query);
     setItems([]);
     setPage(1);
   };
