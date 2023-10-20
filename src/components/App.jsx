@@ -6,7 +6,7 @@ import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { Searchbar } from './Searchbar/Searchbar';
 
-export const App = ({ onBackdropClick }) => {
+export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
@@ -80,7 +80,7 @@ export const App = ({ onBackdropClick }) => {
         <Modal
           url={largeImageURL}
           tags={tags}
-          onClick={onBackdropClick}
+          // onClick={onBackdropClick}
           hideModal={hideModal}
         />
       )}

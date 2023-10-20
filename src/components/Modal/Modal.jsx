@@ -24,13 +24,11 @@ export const Modal = ({ hideModal, url, tags }) => {
   }, [hideModal]);
 
   return (
-    (
-      <Overlay onClick={onBackdropClick}>
-        <ModalWindow>
-          <img src={url} alt={tags} />
-        </ModalWindow>
-      </Overlay>
-    ),
-    document.querySelector('#modal-root')
+    <Overlay onClick={onBackdropClick}>
+      <ModalWindow>
+        <img src={url} alt={tags} />
+      </ModalWindow>
+    </Overlay>
+    // document.querySelector('#modal-root')
   );
 };
