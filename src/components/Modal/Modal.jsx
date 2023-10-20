@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-// import { createPortal } from 'react-dom';
+import { createPortal } from 'react-dom';
 import { ModalWindow, Overlay } from './Modal.styled';
 
 export const Modal = ({ hideModal, url, tags }) => {
@@ -23,11 +23,12 @@ export const Modal = ({ hideModal, url, tags }) => {
     };
   }, [hideModal]);
 
-  return (
+  return createPortal(
     <Overlay onClick={onBackdropClick}>
       <ModalWindow>
         <img src={url} alt={tags} />
       </ModalWindow>
-    </Overlay>
+    </Overlay>,
+    document.querySelector('#modal-root')
   );
 };
