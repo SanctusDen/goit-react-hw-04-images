@@ -16,7 +16,7 @@ export const App = ({ onBackdropClick }) => {
   const [largeImageURL, setLargeImageURL] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [tags, setTags] = useState('');
 
   const startLoader = () => {
@@ -29,39 +29,14 @@ export const App = ({ onBackdropClick }) => {
 
   const onLoadMore = () => {
     setPage(page => page + 1);
-    // this.setState(state => {
-    //   return { page: state.page + 1 };
-    // });
   };
-
-  // function async componentDidUpdate(prevProps, prevState) {
-  //   if (page !== prevState.page || searchQuery !== searchQuery) {
-  //     try {
-  //       startLoader();
-  //       const response = await fetchImages(searchQuery, page, perPage);
-  //       const {
-  //         data: { hits: items, totalHits },
-  //       } = response;
-  //       const totalPages = Math.ceil(totalHits / perPage);
-
-  //       setItems(() => {
-  //         return { items: [...state.items, ...items], totalPages };
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //       setError(error.message);
-  //     } finally {
-  //       stopLoader();
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     if (!searchQuery) return;
     async function fetchData() {
       try {
         startLoader();
-        const response = await fetchImages(searchQuery, page, perPage);
+        const response = await fetchImages(searchQuery, page, setPerPage);
         const {
           data: { hits: items, totalHits },
         } = response;
@@ -70,7 +45,8 @@ export const App = ({ onBackdropClick }) => {
         setItems(prevItems => [...prevItems, ...items]);
         setTotalPages(totalPages);
       } catch (error) {
-        setError(error.message);
+        console.log(error);
+        // setError(error.message);
       } finally {
         stopLoader();
       }
@@ -78,33 +54,24 @@ export const App = ({ onBackdropClick }) => {
     fetchData();
   }, [page, perPage, searchQuery]);
 
-  // const onSubmit = searchQuery => {
-  //   if (searchQuery.trim() !== searchQuery) {
-  //     this.setState(prev => ({
-  //       searchQuery,
-  //       items: [],
-  //       page: 1,
-  //     }));
-  //   }
-  // };
-
   const onSubmit = query => {
     setSearchQuery(query);
     setItems([]);
     setPage(1);
   };
 
-  const onImageClick = ({ largeImageURL, tags }) => {
-    setTags(prev => [...prev, tags], largeImageURL);
+  const onImageClick = ({ tags }) => {
+    setTags(prev => [...prev, tags]);
+    setLargeImageURL(largeImageURL);
     showModal();
   };
 
   const showModal = () => {
-    setIsLoading(true);
+    setIsModalOpen(true);
   };
 
   const hideModal = () => {
-    setIsLoading(false);
+    setIsModalOpen(false);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { createPortal } from 'react-dom';
+// import { createPortal } from 'react-dom';
 import { ModalWindow, Overlay } from './Modal.styled';
 
 export const Modal = ({ hideModal, url, tags }) => {
@@ -15,18 +15,22 @@ export const Modal = ({ hideModal, url, tags }) => {
         hideModal();
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [hideModal]);
 
-  return createPortal(
-    <Overlay onClick={onBackdropClick}>
-      <ModalWindow>
-        <img src={url} alt={tags} />
-      </ModalWindow>
-    </Overlay>,
+  return (
+    (
+      <Overlay onClick={onBackdropClick}>
+        <ModalWindow>
+          <img src={url} alt={tags} />
+        </ModalWindow>
+      </Overlay>
+    ),
     document.querySelector('#modal-root')
   );
 };
