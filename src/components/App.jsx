@@ -15,7 +15,6 @@ export const App = () => {
   const [largeImageURL, setLargeImageURL] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [tags, setTags] = useState('');
 
   const startLoader = () => {
@@ -44,13 +43,13 @@ export const App = () => {
         setItems(prev => [...prev, ...items]);
         setTotalPages(totalPages);
       } catch (error) {
-        setError(error.message);
+        console.log(error);
       } finally {
         stopLoader();
       }
     }
     fetchData();
-  }, [page, perPage, searchQuery, error]);
+  }, [page, perPage, searchQuery]);
 
   const onSubmit = query => {
     setSearchQuery(query);
@@ -77,12 +76,7 @@ export const App = () => {
       )}
       {isLoading && <Loader />}
       {isModalOpen && (
-        <Modal
-          url={largeImageURL}
-          tags={tags}
-          // onClick={onBackdropClick}
-          hideModal={hideModal}
-        />
+        <Modal url={largeImageURL} tags={tags} hideModal={hideModal} />
       )}
     </>
   );

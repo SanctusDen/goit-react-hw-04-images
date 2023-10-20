@@ -29,6 +29,5 @@ export const Modal = ({ hideModal, url, tags }) => {
         <img src={url} alt={tags} />
       </ModalWindow>
     </Overlay>
-    // document.querySelector('#modal-root')
   );
 };
