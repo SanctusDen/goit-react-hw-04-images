@@ -3,12 +3,6 @@ import { createPortal } from 'react-dom';
 import { ModalWindow, Overlay } from './Modal.styled';
 
 export const Modal = ({ hideModal, url, tags }) => {
-  const handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      hideModal();
-    }
-  };
-
   const onBackdropClick = e => {
     if (e.target === e.currentTarget) {
       hideModal();
@@ -16,14 +10,16 @@ export const Modal = ({ hideModal, url, tags }) => {
   };
 
   useEffect(() => {
+    const handleKeyDown = event => {
+      if (event.code === 'Escape') {
+        hideModal();
+      }
+    };
     window.addEventListener('keydown', handleKeyDown);
-  }, []);
-
-  useEffect(() => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [hideModal]);
 
   return createPortal(
     <Overlay onClick={onBackdropClick}>

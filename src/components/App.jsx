@@ -28,9 +28,10 @@ export const App = ({ onBackdropClick }) => {
   };
 
   const onLoadMore = () => {
-    this.setState(state => {
-      return { page: state.page + 1 };
-    });
+    setPage(page => page + 1);
+    // this.setState(state => {
+    //   return { page: state.page + 1 };
+    // });
   };
 
   // function async componentDidUpdate(prevProps, prevState) {
@@ -56,6 +57,7 @@ export const App = ({ onBackdropClick }) => {
   // };
 
   useEffect(() => {
+    if (!searchQuery) return;
     async function fetchData() {
       try {
         startLoader();
@@ -65,10 +67,8 @@ export const App = ({ onBackdropClick }) => {
         } = response;
         const totalPages = Math.ceil(totalHits / perPage);
 
-        // setItems(() => {
-        //   return { items: [...items], totalPages };
-        // });
-        setItems(prev => [...prev, items, totalPages]);
+        setItems(prevItems => [...prevItems, ...items]);
+        setTotalPages(totalPages);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -90,7 +90,7 @@ export const App = ({ onBackdropClick }) => {
 
   const onSubmit = () => {
     setSearchQuery(searchQuery);
-    setItems(items);
+    setItems([]);
     setPage(1);
   };
 
