@@ -11,12 +11,11 @@ export const App = ({ onBackdropClick }) => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
-  const [perPage, setPerPage] = useState(12);
-
+  const [perPage] = useState(12);
   const [largeImageURL, setLargeImageURL] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [tags, setTags] = useState('');
 
   const startLoader = () => {
@@ -36,23 +35,22 @@ export const App = ({ onBackdropClick }) => {
     async function fetchData() {
       try {
         startLoader();
-        const response = await fetchImages(searchQuery, page, setPerPage);
+        const response = await fetchImages(searchQuery, page, perPage);
         const {
           data: { hits: items, totalHits },
         } = response;
         const totalPages = Math.ceil(totalHits / perPage);
 
-        setItems(prevItems => [...prevItems, ...items]);
+        setItems(prev => [...prev, ...items]);
         setTotalPages(totalPages);
       } catch (error) {
-        console.log(error);
-        // setError(error.message);
+        setError(error.message);
       } finally {
         stopLoader();
       }
     }
     fetchData();
-  }, [page, perPage, searchQuery]);
+  }, [page, perPage, searchQuery, error]);
 
   const onSubmit = query => {
     setSearchQuery(query);
@@ -60,19 +58,15 @@ export const App = ({ onBackdropClick }) => {
     setPage(1);
   };
 
-  const onImageClick = ({ tags }) => {
+  const onImageClick = ({ largeImageURL, tags }) => {
     setTags(prev => [...prev, tags]);
     setLargeImageURL(largeImageURL);
     showModal();
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const showModal = () => setIsModalOpen(true);
 
-  const hideModal = () => {
-    setIsModalOpen(false);
-  };
+  const hideModal = () => setIsModalOpen(false);
 
   return (
     <>

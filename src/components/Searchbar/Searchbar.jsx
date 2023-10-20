@@ -12,15 +12,6 @@ export const Searchbar = ({ onSubmit }) => {
     onSubmit(searchQuery);
   };
 
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-
-  //   const searchQueryData = e.currentTarget.elements.searchQuery.value;
-
-  //   SetSearchQuery(searchQueryData);
-  //   onsubmit(searchQuery);
-  // };
-
   return (
     <SearchHeader>
       <Form onSubmit={handleSubmit}>
